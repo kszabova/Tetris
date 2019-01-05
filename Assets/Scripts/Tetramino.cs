@@ -31,7 +31,7 @@ public class Tetramino : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || Time.time - fall >= fallSpeed)
         {
-            transform.Rotate(0, 0, -90);
+            transform.position += new Vector3(0, -1, 0);
             fall = Time.time;
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
