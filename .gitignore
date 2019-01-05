@@ -1,4 +1,9 @@
-/Library/
+Library/
 
-/Minos/
-/ProjectSettings/
+Minos/
+ProjectSettings/
+Temp/
+.vs/
+obj/
+Tetris.sln
+Assembly-CSharp.csproj
