@@ -24,19 +24,54 @@ public class Tetramino : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             transform.position += new Vector3(1, 0, 0);
+            // if tetramino gets outside of grid, move it back to previous position
+            if (!IsValidPosition())
+            {
+                transform.position += new Vector3(-1, 0, 0);
+            }
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             transform.position += new Vector3(-1, 0, 0);
+            // if tetramino gets outside of grid, move it back to previous position
+            if (!IsValidPosition())
+            {
+                transform.position += new Vector3(1, 0, 0);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            transform.Rotate(0, 0, 90);
+            // if tetramino gets outside of grid, rotate it back
+            if (!IsValidPosition())
+            {
+                transform.Rotate(0, 0, -90);
+            }
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || Time.time - fall >= fallSpeed)
         {
             transform.position += new Vector3(0, -1, 0);
             fall = Time.time;
+            // if tetramino gets outside of grid, move it back to previous position
+            if (!IsValidPosition())
+            {
+                transform.position += new Vector3(0, 1, 0);
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
+    }
+
+    // returns true if tetramino is inside of grid
+    bool IsValidPosition()
+    {
+        // check position of each square of tetramino
+        foreach (Transform mino in transform)
         {
-            transform.Rotate(0, 0, 90);
+            Vector2 position = FindObjectOfType<Game>().Round(mino.position);
+            if (!FindObjectOfType<Game>().IsInsideGrid(position))
+            {
+                return false;
+            }
         }
+        return true;
     }
 }
