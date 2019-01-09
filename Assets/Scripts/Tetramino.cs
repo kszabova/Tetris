@@ -56,6 +56,8 @@ public class Tetramino : MonoBehaviour {
             if (!IsValidPosition())
             {
                 transform.position += new Vector3(0, 1, 0);
+                enabled = false;
+                FindObjectOfType<Game>().InstantiateTetromino();
             }
         }
     }
