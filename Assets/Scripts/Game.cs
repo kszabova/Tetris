@@ -9,7 +9,7 @@ public class Game : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        InstantiateTetromino();
 	}
 	
 	// Update is called once per frame
@@ -27,5 +27,47 @@ public class Game : MonoBehaviour {
     public Vector2 Round(Vector2 position)
     {
         return new Vector2(Mathf.Round(position.x), Mathf.Round(position.y));
+    }
+
+    // instantiates a new Tetromino
+    public void InstantiateTetromino()
+    {
+        GameObject newTetromino = (GameObject)Instantiate(Resources.Load(GetRandomTetromino(), typeof(GameObject)),
+                                                            new Vector2(5, 18), Quaternion.identity);
+    }
+
+    // returns random tetromino name
+    string GetRandomTetromino()
+    {
+        int randomNumber = Random.Range(1, 8);
+        string randomTetromino;
+        switch (randomNumber)
+        {
+            case 1:
+                randomTetromino = "Prefabs/TetrominoJ";
+                break;
+            case 2:
+                randomTetromino = "Prefabs/TetrominoL";
+                break;
+            case 3:
+                randomTetromino = "Prefabs/TetrominoLong";
+                break;
+            case 4:
+                randomTetromino = "Prefabs/TetrominoS";
+                break;
+            case 5:
+                randomTetromino = "Prefabs/TetrominoSquare";
+                break;
+            case 6:
+                randomTetromino = "Prefabs/TetrominoT";
+                break;
+            case 7:
+                randomTetromino = "Prefabs/TetrominoZ";
+                break;
+            default:
+                randomTetromino = "";
+                break;
+        }
+        return randomTetromino;
     }
 }
