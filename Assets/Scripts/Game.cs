@@ -16,15 +16,12 @@ public class Game : MonoBehaviour {
 
     public bool CheckIfAboveGrid(Tetramino tetramino)
     {
-        for (int x = 0; x < gridWidth; ++x)
+        foreach (Transform mino in tetramino.transform)
         {
-            foreach (Transform mino in tetramino.transform)
+            Vector2 pos = mino.position;
+            if (pos.y > gridHeight - 1)
             {
-                Vector2 pos = mino.position;
-                if (pos.y > gridHeight - 1)
-                {
-                    return true;
-                }
+                return true;
             }
         }
         return false;
