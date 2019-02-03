@@ -3,7 +3,10 @@ Library/
 Minos/
 ProjectSettings/
 Temp/
+Tetris_Data/
 .vs/
 obj/
 Tetris.sln
 Assembly-CSharp.csproj
+Tetris.exe
+UnityPlayer.dll

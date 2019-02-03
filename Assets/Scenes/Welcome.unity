@@ -231,9 +231,9 @@ Camera:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.15
+    x: 0
     y: 0
-    width: 0.7
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -993,6 +993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c0a82c7311b1f4192d075bcd372aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
 --- !u!4 &1936763775
 Transform:
   m_ObjectHideFlags: 0
