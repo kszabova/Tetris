@@ -24,8 +24,13 @@ public class Tetramino : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             transform.position += new Vector3(1, 0, 0);
-            // if tetramino gets outside of grid, move it back to previous position
-            if (!IsValidPosition())
+            // update grid if tetramino is at a valid position;
+            // otherwise move it back at previous position
+            if (IsValidPosition())
+            {
+                FindObjectOfType<Game>().UpdateGrid(this);
+            }
+            else
             {
                 transform.position += new Vector3(-1, 0, 0);
             }
@@ -34,7 +39,11 @@ public class Tetramino : MonoBehaviour {
         {
             transform.position += new Vector3(-1, 0, 0);
             // if tetramino gets outside of grid, move it back to previous position
-            if (!IsValidPosition())
+            if (IsValidPosition())
+            {
+                FindObjectOfType<Game>().UpdateGrid(this);
+            }
+            else
             {
                 transform.position += new Vector3(1, 0, 0);
             }
@@ -43,7 +52,11 @@ public class Tetramino : MonoBehaviour {
         {
             transform.Rotate(0, 0, 90);
             // if tetramino gets outside of grid, rotate it back
-            if (!IsValidPosition())
+            if (IsValidPosition())
+            {
+                FindObjectOfType<Game>().UpdateGrid(this);
+            }
+            else
             {
                 transform.Rotate(0, 0, -90);
             }
@@ -51,14 +64,18 @@ public class Tetramino : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.DownArrow) || Time.time - fall >= fallSpeed)
         {
             transform.position += new Vector3(0, -1, 0);
-            fall = Time.time;
             // if tetramino gets outside of grid, move it back to previous position
-            if (!IsValidPosition())
+            if (IsValidPosition())
+            {
+                FindObjectOfType<Game>().UpdateGrid(this);
+            }
+            else
             {
                 transform.position += new Vector3(0, 1, 0);
                 enabled = false;
-                FindObjectOfType<Game>().InstantiateTetromino();
+                FindObjectOfType<Game>().InstantiateTetramino();
             }
+            fall = Time.time;
         }
     }
 
@@ -70,6 +87,12 @@ public class Tetramino : MonoBehaviour {
         {
             Vector2 position = FindObjectOfType<Game>().Round(mino.position);
             if (!FindObjectOfType<Game>().IsInsideGrid(position))
+            {
+                return false;
+            }
+            // if position in grid is occupied by a tetramino other than the current one, position is invalid
+            if (FindObjectOfType<Game>().GetTransformAtPosition(position) != null &&
+                    FindObjectOfType<Game>().GetTransformAtPosition(position).parent != transform)
             {
                 return false;
             }
