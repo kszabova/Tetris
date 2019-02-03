@@ -5,8 +5,13 @@ using UnityEngine;
 
 public class MenuSystem : MonoBehaviour {
 
-	public void PlayAgain()
+	public void Play()
     {
         SceneManager.LoadScene("Level");
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
