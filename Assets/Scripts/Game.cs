@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Game : MonoBehaviour {
@@ -8,9 +9,15 @@ public class Game : MonoBehaviour {
     public static int gridWidth = 10;
     public static int gridHeight = 20;
     public static Transform[,] grid = new Transform[gridWidth, gridHeight];
+    public Text scoreText;
+
+    private int score;
 
 	// Use this for initialization
-	void Start () {
+	void Start()
+    {
+        score = 0;
+        SetScoreText();
         InstantiateTetramino();
 	}
 
@@ -76,6 +83,7 @@ public class Game : MonoBehaviour {
     // deletes all full rows and moves all rows above to one below
     public void DeleteRow()
     {
+        int rowsDeleted = 0;
         for (int y = 0; y < gridHeight; ++y)
         {
             if (IsRowFull(y))
@@ -85,8 +93,10 @@ public class Game : MonoBehaviour {
                 // all row indexes are now decremented by 1,
                 // the following row now has the same index as current row previously
                 --y;
+                ++rowsDeleted;
             }
         }
+        UpdateScore(rowsDeleted);
     }
 
     // updates grid; null indicates position is empty,
@@ -183,6 +193,39 @@ public class Game : MonoBehaviour {
         return randomTetramino;
     }
 
+    // updates score depending on how many rows have been removed
+    void UpdateScore(int rows)
+    {
+        switch (rows)
+        {
+            case 0:
+                break;
+            case 1:
+                score += 1;
+                break;
+            case 2:
+                score += 3;
+                break;
+            case 3:
+                score += 5;
+                break;
+            case 4:
+                score += 10;
+                break;
+            default:
+                score += rows * 3;
+                break;
+        }
+        SetScoreText();
+    }
+
+    // sets the displaying score to current score
+    void SetScoreText()
+    {
+        scoreText.text = "Score: " + score.ToString();
+    }
+
+    // switches to the GameOver screen
     public void GameOver()
     {
         SceneManager.LoadScene("GameOver");
