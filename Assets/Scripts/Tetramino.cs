@@ -73,6 +73,10 @@ public class Tetramino : MonoBehaviour {
             {
                 transform.position += new Vector3(0, 1, 0);
                 FindObjectOfType<Game>().DeleteRow();
+                if (FindObjectOfType<Game>().CheckIfAboveGrid(this))
+                {
+                    FindObjectOfType<Game>().GameOver();
+                }
                 enabled = false;
                 FindObjectOfType<Game>().InstantiateTetramino();
             }
