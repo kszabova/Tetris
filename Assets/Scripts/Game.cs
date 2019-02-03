@@ -12,11 +12,68 @@ public class Game : MonoBehaviour {
 	void Start () {
         InstantiateTetramino();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // checks if every position in a given row is filled by a mino
+    public bool IsRowFull(int y)
+    {
+        for (int x = 0; x < gridWidth; ++x)
+        {
+            if (grid[x, y] == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    // deletes all minos in a given row and replaces their position in grid by null
+    public void DeleteMinosInRow(int y)
+    {
+        for (int x = 0; x < gridWidth; ++x)
+        {
+            Destroy(grid[x, y].gameObject);
+            grid[x, y] = null;
+        }
+    }
+
+    // moves all minos in a given row to the row below
+    public void MoveRowDown(int y)
+    {
+        for (int x = 0; x < gridWidth; ++x)
+        {
+            if (grid[x, y] != null)
+            {
+                grid[x, y - 1] = grid[x, y];
+                grid[x, y] = null;
+                grid[x, y - 1].position += new Vector3(0, -1, 0);
+            }
+        }
+    }
+
+    // moves all rows above a given index to one row down
+    public void MoveAllRows(int start_y)
+    {
+        for (int y = start_y; y < gridHeight; ++y)
+        {
+            MoveRowDown(y);
+        }
+    }
+
+    // deletes all full rows and moves all rows above to one below
+    public void DeleteRow()
+    {
+        for (int y = 0; y < gridHeight; ++y)
+        {
+            if (IsRowFull(y))
+            {
+                DeleteMinosInRow(y);
+                MoveAllRows(y + 1);
+                // all row indexes are now decremented by 1,
+                // the following row now has the same index as current row previously
+                --y;
+            }
+        }
+    }
 
     // updates grid; null indicates position is empty,
     // if position is occupied, grid[x,y] contains the Transform of the object occupying it
