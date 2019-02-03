@@ -228,6 +228,12 @@ public class Game : MonoBehaviour {
     // switches to the GameOver screen
     public void GameOver()
     {
+        SaveScore();
         SceneManager.LoadScene("GameOver");
+    }
+
+    void SaveScore()
+    {
+        PlayerPrefs.SetInt("CurrentScore", score);
     }
 }
