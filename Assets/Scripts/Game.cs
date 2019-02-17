@@ -154,8 +154,7 @@ public class Game : MonoBehaviour {
     // instantiates a new Tetramino
     public void InstantiateTetramino()
     {
-        GameObject newTetramino = (GameObject)Instantiate(Resources.Load(GetRandomTetramino(), typeof(GameObject)),
-                                                            new Vector2(5, 20), Quaternion.identity);
+        Instantiate(Resources.Load(GetRandomTetramino(), typeof(GameObject)), new Vector2(5, 20), Quaternion.identity);
     }
 
     // returns random tetramino name
